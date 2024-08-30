@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class GameState {
     private final int number;
-    private int oldNumber = 0;
-    private int addedNumber = 0;
+    private int oldNumber;
+    private int addedNumber;
 
     @JsonCreator
     public GameState(@JsonProperty("number") int number) {
