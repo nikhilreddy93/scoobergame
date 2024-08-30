@@ -1,12 +1,12 @@
 /**
  * 
  */
-package com.jet.scoobergame.infrastructure;
+package com.jet.scoobergame.infrastructure.event;
 
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-import com.jet.scoobergame.domain.Game;
+import com.jet.scoobergame.domain.model.Game;
 
 /**
  * 

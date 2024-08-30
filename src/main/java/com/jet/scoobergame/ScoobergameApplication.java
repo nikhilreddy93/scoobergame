@@ -5,7 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.jet.scoobergame.application.PlayerService;
+import com.jet.scoobergame.application.service.PlayerService;
 
 @SpringBootApplication
 public class ScoobergameApplication implements CommandLineRunner {

@@ -1,14 +1,14 @@
 /**
  * 
  */
-package com.jet.scoobergame.infrastructure;
+package com.jet.scoobergame.infrastructure.event;
 
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
-import com.jet.scoobergame.domain.Game;
-import com.jet.scoobergame.domain.GameService;
-import com.jet.scoobergame.domain.Player;
+import com.jet.scoobergame.domain.model.Game;
+import com.jet.scoobergame.domain.service.GameService;
+import com.jet.scoobergame.domain.model.Player;
 
 
 /**
@@ -41,7 +41,7 @@ public class GameEventListener {
      */
     @KafkaListener(topics = TOPIC, groupId = GROUPID)
     public void handleGameEvent(Game game) {
-        System.out.println("Consumed game event: " + game.getGameId() + " with number: " + game.getGameState().getNumber());
+        System.out.println("Consumed game event: " + game.getGameId() + " with number: " + game.getGameState().getOldNumber());
         if(game.getGameState().isGameOver()) {
         	System.out.println("Game Over. " + game.getCurrentPlayer().getName()+" is the Winner.");
         	return;

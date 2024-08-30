@@ -1,4 +1,4 @@
-package com.jet.scoobergame.domain;
+package com.jet.scoobergame.domain.model;
 
 import java.util.Objects;
 

@@ -1,8 +1,9 @@
 /**
  * 
  */
-package com.jet.scoobergame.application;
+package com.jet.scoobergame.application.controller;
 
+import com.jet.scoobergame.application.service.PlayerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

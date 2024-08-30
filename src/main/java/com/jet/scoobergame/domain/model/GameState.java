@@ -1,4 +1,4 @@
-package com.jet.scoobergame.domain;
+package com.jet.scoobergame.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

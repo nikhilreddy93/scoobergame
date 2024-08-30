@@ -1,4 +1,4 @@
-package com.jet.scoobergame.application;
+package com.jet.scoobergame.application.service;
 
 import java.util.List;
 import java.util.Random;
@@ -10,11 +10,11 @@ import com.jet.scoobergame.application.exception.GameNotFoundException;
 import com.jet.scoobergame.application.exception.PlayerAlreadyExistsException;
 import org.springframework.stereotype.Service;
 
-import com.jet.scoobergame.domain.Game;
-import com.jet.scoobergame.domain.GameService;
-import com.jet.scoobergame.domain.Player;
-import com.jet.scoobergame.infrastructure.GameEventProducer;
-import com.jet.scoobergame.domain.GameState;
+import com.jet.scoobergame.domain.model.Game;
+import com.jet.scoobergame.domain.service.GameService;
+import com.jet.scoobergame.domain.model.Player;
+import com.jet.scoobergame.infrastructure.event.GameEventProducer;
+import com.jet.scoobergame.domain.model.GameState;
 
 /**
  * Manages the player lifecycle and tracks the current game state.

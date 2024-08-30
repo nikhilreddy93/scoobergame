@@ -1,10 +1,13 @@
-package com.jet.scoobergame.domain;
+package com.jet.scoobergame.domain.service;
 
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import com.jet.scoobergame.domain.model.Game;
+import com.jet.scoobergame.domain.model.GameState;
+import com.jet.scoobergame.domain.model.Player;
 import org.springframework.stereotype.Service;
 /**
  * Manages the game lifecycle and tracks the current game state.

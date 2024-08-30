@@ -1,4 +1,4 @@
-package com.jet.scoobergame.infrastructure;
+package com.jet.scoobergame.infrastructure.config;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +20,7 @@ import org.springframework.kafka.support.serializer.ErrorHandlingDeserializer;
 import org.springframework.kafka.support.serializer.JsonDeserializer;
 import org.springframework.kafka.support.serializer.JsonSerializer;
 
-import com.jet.scoobergame.domain.Game;
+import com.jet.scoobergame.domain.model.Game;
 
 @EnableKafka
 @Configuration
