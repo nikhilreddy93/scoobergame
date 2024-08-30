@@ -13,6 +13,11 @@ import com.jet.scoobergame.domain.Player;
 import com.jet.scoobergame.infrastructure.GameEventProducer;
 import com.jet.scoobergame.domain.GameState;
 
+/**
+ * Manages the player lifecycle and tracks the current game state.
+ *
+ * @author Nikhil
+ */
 @Service
 public class PlayerService {
 
@@ -26,6 +31,12 @@ public class PlayerService {
 		this.gameEventProducer = gameEventProducer;
 	}
 
+	/**
+	 * Registers the initial players and starts the game.
+	 *
+	 * @param player1Name Name of the first player
+	 * @param player2Name Name of the second player
+	 */
 	// Register initial players and start the game
 	public void registerPlayers(String player1Name, String player2Name) {
 		Player player1 = new Player(player1Name);
@@ -37,8 +48,12 @@ public class PlayerService {
 			startGame(player1, List.copyOf(registeredPlayers.values()));
 		}
 	}
-
-	// Calls GameService to initialize the game and then publishes the initial state
+	/**
+	 * Calls GameService to initialize the game and then publishes the initial state
+	 *
+	 * @param firstPlayer The first player to start the game
+	 * @param players The list of players in the game
+	 */
 	private void startGame(Player firstPlayer, List<Player> players) {
 		if (currentGame != null) {
 			System.out.println("Game has already been started. Skipping initialization.");
@@ -48,7 +63,10 @@ public class PlayerService {
 		currentGame = gameService.startGame(firstPlayer, players);
 		gameEventProducer.publishGameEvent(currentGame); // Ensure only one event is published
 	}
-	
+
+	/**
+	 * Starts the game with the registered players. This method is used to restart the game.
+	 */
 	public void startGame() {
 		int startNumber = new Random().nextInt(Integer.MAX_VALUE) + 1;
 		currentGame = new Game(UUID.randomUUID(), registeredPlayers.values().stream().findFirst().get(), new GameState(startNumber),
@@ -57,13 +75,15 @@ public class PlayerService {
 		System.out.println(currentGame.getCurrentPlayer().getName() + " started the game with number: " + startNumber);
 	}
 
-	// Add a new player to the game during gameplay
+	/**
+	 * Add a new player to the game during gameplay
+	 * @param playerName The name of the new player
+	 */
 	public void addNewPlayer(String playerName) {
 		Player newPlayer = new Player(playerName);
 		if (currentGame != null && !registeredPlayers.containsKey(playerName)) {
 			registeredPlayers.put(playerName, newPlayer);
 			currentGame = gameService.addPlayer(currentGame, newPlayer);
-//			gameEventProducer.publishGameEvent(currentGame);
 			System.out.println(playerName + " has been added to the game.");
 		} else {
 			System.out.println("Player is already registered or game not started.");
