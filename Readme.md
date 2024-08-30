@@ -11,6 +11,8 @@ This project implements the "Game of Three" using a **Spring Boot** application 
 3. [Game Logic](#game-logic)
 4. [Classes Overview](#classes-overview)
 5. [Error Handling](#error-handling)
+6. [Setting Up Kafka Using Docker](#setting-up-kafka-server)
+7. [Setting Up and Running the Application](#setting-up-and-running-the-application)
 
 ## Project Overview
 
@@ -85,3 +87,21 @@ The application has robust error handling using custom exceptions and a global e
 400 Bad Request: When a player already exists.
 404 Not Found: When trying to add a player to a non-existent game.
 500 Internal Server Error: For any other unexpected errors.
+
+##Setting Up Kafka Using Docker
+	1. Create docker-compose.yaml: Use the provided docker-compose.yaml to set up Kafka and Zookeeper.
+	2. Start Kafka and Zookeeper: docker-compose up -d
+
+##Setting Up and Running the Application
+**Prerequisites**:
+	-- Java 17 or later
+	-- Gradle
+	-- Docker for Kafka setup
+**Running the Application Locally**
+	1. Clone the Repository: 
+		git clone https://github.com/nikhilreddy93/scoobergame.git
+		cd scoobergame
+	2. Build the Application:
+		./gradlew clean build
+	3. Run the Application:
+		./gradlew bootRun
