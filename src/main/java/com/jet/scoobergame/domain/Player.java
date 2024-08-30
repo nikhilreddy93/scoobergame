@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Player {
 
-    private String name;
+    private final String name;
     private Boolean isOnline;
     
     @JsonCreator
