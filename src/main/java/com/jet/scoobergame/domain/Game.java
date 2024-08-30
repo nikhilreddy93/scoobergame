@@ -7,7 +7,11 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+/**
+ * The game domain object.
+ *
+ * @author Nikhil
+ */
 public class Game {
 	
 	private final UUID gameId;
@@ -50,12 +54,22 @@ public class Game {
         return version;
     }
 
+    /**
+     * Creates a new game with the next player and version.
+     *
+     * @return The updated game state after the move has been processed.
+     */
     public Game registerPlayer(Player newPlayer) {
         List<Player> newPlayers = new ArrayList<>(this.players);
         newPlayers.add(newPlayer);
         return new Game(this.gameId, this.currentPlayer, this.gameState, newPlayers, this.version + 1);
     }
 
+    /**
+     * Proceeds the game to the next move by updating the current player and version.
+     *
+     * @return The updated game state after the move has been processed.
+     */
     public Game proceedToNextMove() {
         int number = gameState.getNumber();
         int toSubtract = 0;
@@ -68,13 +82,31 @@ public class Game {
 
         int newNumber = (number + toSubtract) / 3;
         Player nextPlayer = getNextPlayer();  // Update to the next player
-
-        return new Game(this.gameId, nextPlayer, new GameState(newNumber), this.players, this.version + 1);
+        GameState newGameState = new GameState(newNumber);
+        newGameState.setOldNumber(number);
+        newGameState.setAddedNumber(toSubtract);
+        return new Game(this.gameId, nextPlayer, newGameState, this.players, this.version + 1);
     }
 
+    /**
+     * Gets the next player in the list of players.
+     *
+     * @return The next player.
+     */
     private Player getNextPlayer() {
         int currentIndex = players.indexOf(currentPlayer);
         int nextIndex = (currentIndex + 1) % players.size();
         return players.get(nextIndex);
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "gameId=" + gameId +
+                ", currentPlayer=" + currentPlayer +
+                ", gameState=" + gameState +
+                ", players=" + players +
+                ", version=" + version +
+                '}';
     }
 }
