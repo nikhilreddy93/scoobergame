@@ -3,8 +3,6 @@
  */
 package com.jet.scoobergame.infrastructure;
 
-import java.util.concurrent.TimeUnit;
-
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +10,12 @@ import com.jet.scoobergame.domain.Game;
 import com.jet.scoobergame.domain.GameService;
 import com.jet.scoobergame.domain.Player;
 
+
 /**
- * 
+ * Listens for messages on the "player-move" topic and processes them using the
+ * GameService. The listener is configured to consume messages from the
+ * beginning of the topic, and it will only process messages that are newer than
+ * the latest version it has seen so far.
  */
 @Component
 public class GameEventListener {
@@ -29,7 +31,14 @@ public class GameEventListener {
         this.gameService = gameService;
         this.gameEventProducer = gameEventProducer;
     }
-
+    /**
+     * Listens for messages on the "player-move" topic and processes them using the
+     * GameService. The listener is configured to consume messages from the
+     * beginning of the topic, and it will only process messages that are newer than
+     * the latest version it has seen so far.
+     *
+     * @param game The game event
+     */
     @KafkaListener(topics = TOPIC, groupId = GROUPID)
     public void handleGameEvent(Game game) {
         System.out.println("Consumed game event: " + game.getGameId() + " with number: " + game.getGameState().getNumber());
