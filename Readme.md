@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This project implements the "Game of Three" using a **Spring Boot** application with **Kafka** for communication between players. The application follows **Domain-Driven Design (DDD)** principles to organize the code into different layers: **Domain**, **Application**, **Infrastructure**, and **Interface (Controllers)**.
+This project implements the "Game of Three"(scoobergame) using a **Spring Boot** application with **Kafka** for communication between players. The application follows **Domain-Driven Design (DDD)** principles to organize the code into different layers: **Domain**, **Application**, **Infrastructure**, and **Interface (Controllers)**.
 
 ## Table of Contents
 
@@ -30,18 +30,18 @@ This project follows **Domain-Driven Design (DDD)** principles and is divided in
 ### **Package Structure**
 
 plaintext
-com.example.gameofthree
-├── application              # Application Layer
-│   ├── controller           # Controllers (GameController, PlayerController)
-│   ├── exception            # Custom Exceptions (GameAlreadyStartedException, etc.)
-│   ├── service              # Application Services (PlayerService)
-├── domain                   # Domain Layer
-│   ├── model                # Entities and Value Objects (Game, Player, GameState)
-│   ├── service              # Domain Services (GameService)
-├── infrastructure           # Infrastructure Layer
-│   ├── event                # Kafka Producer/Consumer (GameEventProducer, GameEventListener)
-│   ├── config               # Kafka Configuration (KafkaConfig)
-└── integration              # Integration Tests (KafkaIntegrationTest)
+com.jet.scoobergame
+application              # Application Layer
+	controller           # Controllers (GameController, PlayerController)
+	exception            # Custom Exceptions (GameAlreadyStartedException, etc.)
+	service              # Application Services (PlayerService)
+domain                   # Domain Layer
+	model                # Entities and Value Objects (Game, Player, GameState)
+	service              # Domain Services (GameService)
+infrastructure           # Infrastructure Layer
+	event                # Kafka Producer/Consumer (GameEventProducer, GameEventListener)
+	config               # Kafka Configuration (KafkaConfig)
+	integration              # Integration Tests (KafkaIntegrationTest)
 
 
 ##Game Logic::
