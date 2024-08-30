@@ -22,8 +22,6 @@ public class GameEventProducer {
     }
 
     public void publishGameEvent(Game game) {
-    	System.out.println("Produced gameId :"+ game.getGameId());
         kafkaTemplate.send(TOPIC, game);
-        System.out.println("Published game event: " + game);
     }
 }
