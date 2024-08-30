@@ -58,12 +58,6 @@ public class GameEventListener {
         gameEventProducer.publishGameEvent(updatedGame);  // Publish the updated game state
         System.out.println("Processed game event: " + updatedGame.getGameId() + " with new number: " + updatedGame.getGameState().getNumber());
         System.out.println("**********************************************************");
-        try {
-			TimeUnit.SECONDS.sleep(5);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
     }
 
     // Placeholder method to check if the next player is online

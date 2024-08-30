@@ -5,6 +5,9 @@ import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.jet.scoobergame.application.exception.GameAlreadyStartedException;
+import com.jet.scoobergame.application.exception.GameNotFoundException;
+import com.jet.scoobergame.application.exception.PlayerAlreadyExistsException;
 import org.springframework.stereotype.Service;
 
 import com.jet.scoobergame.domain.Game;
@@ -41,8 +44,13 @@ public class PlayerService {
 	public void registerPlayers(String player1Name, String player2Name) {
 		Player player1 = new Player(player1Name);
 		Player player2 = new Player(player2Name);
-		registeredPlayers.putIfAbsent(player1Name, player1);
-		registeredPlayers.putIfAbsent(player2Name, player2);
+		if (registeredPlayers.putIfAbsent(player1Name, player1) != null) {
+			throw new PlayerAlreadyExistsException("Player " + player1Name + " already exists.");
+		}
+		if (registeredPlayers.putIfAbsent(player2Name, player2) != null) {
+			throw new PlayerAlreadyExistsException("Player " + player2Name + " already exists.");
+		}
+
 
 		if (registeredPlayers.size() == 2) {
 			startGame(player1, List.copyOf(registeredPlayers.values()));
@@ -57,7 +65,7 @@ public class PlayerService {
 	private void startGame(Player firstPlayer, List<Player> players) {
 		if (currentGame != null) {
 			System.out.println("Game has already been started. Skipping initialization.");
-			return; // Prevents re-initialization
+			throw new GameAlreadyStartedException("Game has already been started. Skipping initialization.");
 		}
 
 		currentGame = gameService.startGame(firstPlayer, players);
@@ -80,13 +88,16 @@ public class PlayerService {
 	 * @param playerName The name of the new player
 	 */
 	public void addNewPlayer(String playerName) {
+		if (currentGame == null) {
+			throw new GameNotFoundException("Game not found. Start a new game first.");
+		}
 		Player newPlayer = new Player(playerName);
-		if (currentGame != null && !registeredPlayers.containsKey(playerName)) {
+		if (!registeredPlayers.containsKey(playerName)) {
 			registeredPlayers.put(playerName, newPlayer);
 			currentGame = gameService.addPlayer(currentGame, newPlayer);
 			System.out.println(playerName + " has been added to the game.");
 		} else {
-			System.out.println("Player is already registered or game not started.");
+			throw new PlayerAlreadyExistsException("Player " + playerName + " already exists in the game.");
 		}
 	}
 

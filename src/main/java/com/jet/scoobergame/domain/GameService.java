@@ -42,7 +42,7 @@ public class GameService {
 
         // Ensure the move is only processed if it's valid (prevent duplicate or conflicting moves)
         Game updatedGame = game.proceedToNextMove();
-        System.out.println("Received Number: "+ game.getGameState().getNumber() + ", New number: " + game.getGameState().getOldNumber() + ", Added number: " + game.getGameState().getAddedNumber());
+        System.out.println("Received Number: "+ game.getGameState().getOldNumber() + ", New number: " + game.getGameState().getNumber() + ", Added number: " + game.getGameState().getAddedNumber());
         System.out.println(updatedGame.getCurrentPlayer().getName() + " will take the next turn with number: " + updatedGame.getGameState().getNumber());
         return updatedGame;
     }
