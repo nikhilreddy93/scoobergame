@@ -1,24 +1,37 @@
 package com.jet.scoobergame.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Game {
-
+	
+	private final UUID gameId;
     private final Player currentPlayer;
     private final GameState gameState;
     private final List<Player> players;
+    private final long version;
 
     @JsonCreator
-    public Game(@JsonProperty("currentPlayer") Player currentPlayer, 
-    		@JsonProperty("gameState") GameState gameState, 
-    		@JsonProperty("players") List<Player> players) {
+    public Game(
+            @JsonProperty("gameId") UUID gameId,
+            @JsonProperty("currentPlayer") Player currentPlayer,
+            @JsonProperty("gameState") GameState gameState,
+            @JsonProperty("players") List<Player> players,
+            @JsonProperty("version") long version) {
+        this.gameId = gameId;
         this.currentPlayer = currentPlayer;
         this.gameState = gameState;
-        this.players = new ArrayList<>(players);
+        this.players = Collections.unmodifiableList(players);  // Ensure immutability
+        this.version = version;
+    }
+
+    public UUID getGameId() {
+        return gameId;
     }
 
     public Player getCurrentPlayer() {
@@ -32,26 +45,17 @@ public class Game {
     public List<Player> getPlayers() {
         return players;
     }
-    
- // Register a new player to the game
+
+    public long getVersion() {
+        return version;
+    }
+
     public Game registerPlayer(Player newPlayer) {
-        if (!players.contains(newPlayer)) {
-            players.add(newPlayer);
-            System.out.println(newPlayer.getName() + " has joined the game.");
-            return new Game(newPlayer, gameState, players);
-        }
-        return new Game(currentPlayer, gameState, players);  // Return the updated game state
+        List<Player> newPlayers = new ArrayList<>(this.players);
+        newPlayers.add(newPlayer);
+        return new Game(this.gameId, this.currentPlayer, this.gameState, newPlayers, this.version + 1);
     }
 
-    // Determine the next player based on the current list of players
-    private Player getNextPlayer() {
-        int currentIndex = players.indexOf(getCurrentPlayer());
-        int nextIndex = (currentIndex + 1) % getPlayers().size();
-//        System.out.println("currentIndex = "+ currentIndex + " and nextIndex = "+ nextIndex);
-        return getPlayers().get(nextIndex);
-    }
-
-    // Proceed to the next move, updating the current player to the next in line
     public Game proceedToNextMove() {
         int number = gameState.getNumber();
         int toSubtract = 0;
@@ -63,8 +67,14 @@ public class Game {
         }
 
         int newNumber = (number + toSubtract) / 3;
-        Player nextPlayer = getNextPlayer(); // Update to the next player
+        Player nextPlayer = getNextPlayer();  // Update to the next player
 
-        return new Game(nextPlayer, new GameState(newNumber), players);
+        return new Game(this.gameId, nextPlayer, new GameState(newNumber), this.players, this.version + 1);
+    }
+
+    private Player getNextPlayer() {
+        int currentIndex = players.indexOf(currentPlayer);
+        int nextIndex = (currentIndex + 1) % players.size();
+        return players.get(nextIndex);
     }
 }
